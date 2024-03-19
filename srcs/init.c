@@ -24,7 +24,7 @@ void	_init_pid_pipe(t_struct **var)
 {
 	if (((*var)->pid_one = fork()) == -1)
 		exit(EXIT_FAILURE);
-	if (pipe((*var).fds) == -1)
+	if (pipe((*var)->fds) == -1)
 		exit(EXIT_FAILURE);
 }
 
@@ -35,10 +35,10 @@ void	_init_path(t_struct **var, char **env)
 	i = 0;
 	while (_comp(env[i], "PATH") != 1)
 		i++;
-	(*var)->path1 = (env[i] + 5);
+	(*var)->path1 = ft_split((env[i] + 5), ':');
 }
 
-void	_init(t_struct **var, char **env)
+void	_init(t_struct **var, char **env, char **argv)
 {
 	_init_fd(argv[1], argv[4], var);
 	_init_pid(var);

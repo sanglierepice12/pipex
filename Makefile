@@ -1,6 +1,7 @@
 SRCS	=	pipex.c		\
 			process.c	\
-			utils.c
+			utils.c		\
+			init.c
 
 OBJS	=	$(SRCS:%.c=${OBJ_D}%.o)
 

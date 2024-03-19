@@ -14,7 +14,7 @@
 
 void	_child_process(t_struct **var)
 {
-	//cmd1 vérif
+	/*//cmd1 vérif
 	(*var)->fd_in;
 	(*var)->cmd1;
 	//fork
@@ -22,11 +22,11 @@ void	_child_process(t_struct **var)
 	//parent -> wait
 	//vérif cmd2 linked cmd 1
 	(*var)->cmd2;
-	//execv (cmd2, fd[1] parent fd_out)
+	//execv (cmd2, fd[1] parent fd_out)*/
 }
 
 void	_second_child(t_struct **var)
 {
-	(*var)->fd_out
-	waitpid((*var)->pid_one,(*var)->status);
+	/*(*var)->fd_out
+	waitpid((*var)->pid_one,(*var)->status)*/
 }

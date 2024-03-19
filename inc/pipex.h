@@ -19,8 +19,7 @@
 /* ------- STRUCT -------*/
 typedef struct s_struct
 {
-	char	*path1;
-	char	*path2;
+	char	**path1;
 	int		fd_in;
 	int		fd_out;
 	int		fds[2];
@@ -41,6 +40,6 @@ int		_comp(char *path, char *look_for);
 /* ------- INIT -------*/
 void	_init_fd(char *file, char *second_file, t_struct **var);
 void	_init_pid(t_struct **var);
-void	_init(t_struct **var, char **env);
+void	_init(t_struct **var, char **env, char **argv);
 
 #endif

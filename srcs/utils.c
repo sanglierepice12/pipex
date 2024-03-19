@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../inc/pipex.h"
-#include <stdio.h>
+
 int	_comp(char *string, char *look_for)
 {
 	size_t	i;
@@ -26,22 +26,23 @@ int	_comp(char *string, char *look_for)
 			i++;
 			j++;
 			if (!look_for[j])
-				return (printf("egal\n"), 1);
+				return (1);//equal
 		}
 		if (string[i])
 			i++;
 	}
-	return (printf("pas egal\n"), 0);
+	return (0);//not equal
 }
 
 /*
 int main(int arc, char **arv, char **env)
 {
-	if (!arc)
-		return 0;
+	if (arc == 1)
+		arv[1] = "PATH";
 	int i = 0;
 	while (_comp(env[i], arv[1]) != 1)
 		i++;
 	printf("%s\n pos[%d]", (env[i] + 5), i);
 	return (0);
-}*/
+}
+*/
