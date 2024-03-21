@@ -41,6 +41,16 @@ void	_init_path(t_struct **var, char **env)
 void	_init(t_struct **var, char **env, char **argv)
 {
 	_init_fd(argv[1], argv[4], var);
-	_init_pid(var);
+	_init_pid_pipe(var);
 	_init_path(var, env);
+}
+
+int	main(int arc, char **argv, char **env)
+{
+	if (arc != 5)
+		return 0;
+	t_struct	*var;
+	var = calloc(1, sizeof(t_struct));
+	_init(&var, env, argv);
+	return (EXIT_SUCCESS);
 }

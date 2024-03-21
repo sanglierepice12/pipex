@@ -14,6 +14,7 @@
 
 void	_child_process(t_struct **var)
 {
+	(void) var;
 	/*//cmd1 vérif
 	(*var)->fd_in;
 	(*var)->cmd1;
@@ -25,8 +26,9 @@ void	_child_process(t_struct **var)
 	//execv (cmd2, fd[1] parent fd_out)*/
 }
 
-void	_second_child(t_struct **var)
+void	_second_child_process(t_struct **var)
 {
+	(void) var;
 	/*(*var)->fd_out
 	waitpid((*var)->pid_one,(*var)->status)*/
 }

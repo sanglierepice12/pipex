@@ -16,6 +16,8 @@ void	_process(t_struct **var)
 {
 	if ((*var)->pid_one == 0)
 		_child_process(var);
+	if ((*var)->pid_two == 0)
+		_second_child_process()
 	if ((*var)->pid_one > 0)
 		_parent_process(var);
 }

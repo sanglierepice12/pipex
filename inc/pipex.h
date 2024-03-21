@@ -32,7 +32,7 @@ void	_process(t_struct **var);
 
 /* ------- PROCESS -------*/
 void	_child_process(t_struct **var);
-void	_parent_process(t_struct **var);
+void	_second_child_process(t_struct **var);
 
 /* ------- UTILS -------*/
 int		_comp(char *path, char *look_for);
