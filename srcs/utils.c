@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gostr <gostr@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: gsuter <gsuter@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/15 15:11:16 by gostr             #+#    #+#             */
-/*   Updated: 2024/03/15 15:11:16 by gostr            ###   ########.fr       */
+/*   Created: 2024/03/22 12:10:38 by gsuter            #+#    #+#             */
+/*   Updated: 2024/03/22 12:10:38 by gsuter           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,3 @@ int	_comp(char *string, char *look_for)
 	}
 	return (0);//not equal
 }
-
-/*
-int main(int arc, char **arv, char **env)
-{
-	if (arc == 1)
-		arv[1] = "PATH";
-	int i = 0;
-	while (_comp(env[i], arv[1]) != 1)
-		i++;
-	printf("%s\n pos[%d]", (env[i] + 5), i);
-	return (0);
-}
-*/

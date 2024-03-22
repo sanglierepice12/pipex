@@ -3,54 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gostr <gostr@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: gsuter <gsuter@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/19 09:28:17 by gostr             #+#    #+#             */
-/*   Updated: 2024/03/19 09:28:17 by gostr            ###   ########.fr       */
+/*   Created: 2024/03/22 12:08:54 by gsuter            #+#    #+#             */
+/*   Updated: 2024/03/22 12:08:54 by gsuter           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/pipex.h"
 
-void	_init_fd(char *file, char *second_file, t_struct **var)
+void	_init_path(t_struct *var, char **env)
 {
-	if (((*var)->fd_in = open(file, O_RDONLY) == -1))
-		exit(EXIT_FAILURE);
-	if (((*var)->fd_out = open(second_file, O_WRONLY | O_CREAT, 0666)) == -1)
-		exit(EXIT_FAILURE);
-}
-
-void	_init_pid_pipe(t_struct **var)
-{
-	if (((*var)->pid_one = fork()) == -1)
-		exit(EXIT_FAILURE);
-	if (pipe((*var)->fds) == -1)
-		exit(EXIT_FAILURE);
-}
-
-void	_init_path(t_struct **var, char **env)
-{
-	int	i;
+	int i;
 
 	i = 0;
-	while (_comp(env[i], "PATH") != 1)
+	if (!env)
+		exit(EXIT_FAILURE);
+	while (ft_strncmp(env[i], "PATH=", 5))
 		i++;
-	(*var)->path1 = ft_split((env[i] + 5), ':');
-}
-
-void	_init(t_struct **var, char **env, char **argv)
-{
-	_init_fd(argv[1], argv[4], var);
-	_init_pid_pipe(var);
-	_init_path(var, env);
-}
-
-int	main(int arc, char **argv, char **env)
-{
-	if (arc != 5)
-		return 0;
-	t_struct	*var;
-	var = calloc(1, sizeof(t_struct));
-	_init(&var, env, argv);
-	return (EXIT_SUCCESS);
+	var->path = ft_split(env[i] + 5, ':');
 }

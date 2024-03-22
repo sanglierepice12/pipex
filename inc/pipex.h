@@ -15,31 +15,36 @@
 
 # include "../libft/incs/libft.h"
 # include <fcntl.h>
+# include <sys/wait.h>
+
+/* ------- PRINTF -------*/
+# include <stdio.h>
+/* ------- ------ -------*/
 
 /* ------- STRUCT -------*/
-typedef struct s_struct
+typedef struct	s_struct
 {
-	char	**path1;
-	int		fd_in;
-	int		fd_out;
-	int		fds[2];
-	int		status;
-	pid_t	pid_one;
-}t_struct;
+	pid_t	pid;
+	pid_t	pid_child;
+	int		pipe_fd[2];
+	char	**path;
+	int		fd;
+	char	*cmd1;
+	char	*cmd2;
+	char	**exec;
+}				t_struct;
 
 /* ------- PIPEX -------*/
-void	_process(t_struct **var);
+
 
 /* ------- PROCESS -------*/
-void	_child_process(t_struct **var);
-void	_second_child_process(t_struct **var);
+void	_child_process(t_struct *var, char **argv, char **env);
+/*void	_second_child_process(t_struct *var, char **argv);*/
 
 /* ------- UTILS -------*/
 int		_comp(char *path, char *look_for);
 
 /* ------- INIT -------*/
-void	_init_fd(char *file, char *second_file, t_struct **var);
-void	_init_pid(t_struct **var);
-void	_init(t_struct **var, char **env, char **argv);
+void	_init_path(t_struct *var, char **env);
 
 #endif

@@ -3,32 +3,68 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gostr <gostr@student.1337.ma>              +#+  +:+       +#+        */
+/*   By: gsuter <gsuter@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/15 11:50:41 by gostr             #+#    #+#             */
-/*   Updated: 2024/03/15 11:50:41 by gostr            ###   ########.fr       */
+/*   Created: 2024/03/22 12:04:49 by gsuter            #+#    #+#             */
+/*   Updated: 2024/03/22 12:04:49 by gsuter           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/pipex.h"
 
-void	_child_process(t_struct **var)
+void	_find_cmd(t_struct *var, char **argv)
 {
-	(void) var;
-	/*//cmd1 vérif
-	(*var)->fd_in;
-	(*var)->cmd1;
-	//fork
-	// child -> execv(cmd1, arg fd_in)
-	//parent -> wait
-	//vérif cmd2 linked cmd 1
-	(*var)->cmd2;
-	//execv (cmd2, fd[1] parent fd_out)*/
+	int	i;
+
+	i = -1;
+	while (++i, var->path[i])
+		var->path[i] = ft_strjoin(var->path[i], "/");
+	i = 0;
+
+	while (var->path[i])
+	{
+		var->cmd1 = ft_strjoin(var->path[i], argv[2]);
+		if (!access(var->cmd1, X_OK))
+			break;
+		free(var->cmd1);
+		i++;
+	}
+	if (!var->path[i])
+		exit(EXIT_FAILURE);
 }
 
-void	_second_child_process(t_struct **var)
+void	_child_process(t_struct *var, char **argv, char **env)
 {
-	(void) var;
-	/*(*var)->fd_out
-	waitpid((*var)->pid_one,(*var)->status)*/
+	var->fd = open(argv[1], O_RDONLY);
+	if (var->fd == -1)
+		exit(EXIT_FAILURE);
+	if (!access(argv[2], X_OK))
+		var->cmd1 = argv[2];
+	else
+		_init_path(var, env);
+	if (!var->cmd1)
+		_find_cmd(var, argv);
+	dup2(var->fd, STDIN_FILENO);
+	//dup2(var->pipe_fd[1], STDOUT_FILENO);
+	close(var->fd);
+	//close(var->pipe_fd[0]);
+	var->exec = ft_calloc(2, sizeof(char *));
+	var->exec[0] = argv[2];
+	var->exec[1] = NULL;
+	execve(var->cmd1, var->exec, env);
+	ft_printf("Error");
 }
+
+/*
+void	_second_child_process(t_struct var, char **argv)
+{
+	var->fd = open(argv[1], O_RDONLY);
+	if (var->fd == -1)
+		exit(EXIT_FAILURE);
+	if (access(argv[3], X_OK))
+		var->cmd2 = argv[3];
+	if (!var->cmd2)
+		_find_cmd(var, argv);
+//dup2(var->pipe_fd[0], STDIN_FILENO);
+
+}*/
