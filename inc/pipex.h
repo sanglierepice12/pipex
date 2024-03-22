@@ -24,11 +24,11 @@
 /* ------- STRUCT -------*/
 typedef struct	s_struct
 {
-	pid_t	pid;
-	pid_t	pid_child;
+	pid_t	pid[2];
 	int		pipe_fd[2];
 	char	**path;
 	int		fd;
+	int		fd2;
 	char	*cmd1;
 	char	*cmd2;
 	char	**exec;
@@ -39,7 +39,7 @@ typedef struct	s_struct
 
 /* ------- PROCESS -------*/
 void	_child_process(t_struct *var, char **argv, char **env);
-/*void	_second_child_process(t_struct *var, char **argv);*/
+void	_second_child_process(t_struct *var, char **argv, char **env);
 
 /* ------- UTILS -------*/
 int		_comp(char *path, char *look_for);

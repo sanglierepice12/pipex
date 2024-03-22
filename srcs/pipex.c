@@ -6,7 +6,7 @@
 /*   By: gsuter <gsuter@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 11:26:28 by gsuter            #+#    #+#             */
-/*   Updated: 2024/03/22 11:26:28 by gsuter           ###   ########.fr       */
+/*   Updated: 2024/03/22 17:08:39 by gsuter           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,33 @@
 static void	_init_things(t_struct *var, char **argv, char **env)
 {
 	if (pipe(var->pipe_fd) == -1)
-		return (exit(EXIT_FAILURE));
-
+		exit(EXIT_FAILURE);
+	var->fd = open(argv[1], O_RDONLY);
+	if (var->fd == -1)
+		exit(EXIT_FAILURE);
+	dup2(var->fd, STDIN_FILENO);
+	dup2(var->pipe_fd[1], STDOUT_FILENO);
 	// PREMIER FORK
-	var->pid = fork();
-	if (var->pid == - 1)
-		return (exit(EXIT_FAILURE));
-	if (!var->pid)
+	var->pid[0] = fork();
+	if (var->pid[0] == - 1)
+		exit(EXIT_FAILURE);
+	if (!var->pid[0])
 		_child_process(var, argv, env);
 
-	/*//DEUXIEME FORK
-	var->pid_child = fork();
-	if (var->pid_child == - 1)
-		return (exit(EXIT_FAILURE));
-	if (!var->pid_child)
-		_second_child_process(var, argv);*/
-	waitpid(var->pid, NULL, 0);
-	//waitpid(var->pid_child, NULL);
+	var->fd = open(argv[4], O_RDONLY | O_TRUNC | O_CREAT, 0644);
+	if (var->fd == -1)
+		exit(EXIT_FAILURE);
+	dup2(var->pipe_fd[0], STDIN_FILERNO);
+	dup2(var->fd, STDOUT_FILENO);
+	//DEUXIEME FORK
+	var->pid[1] = fork();
+	if (var->pid[1] == - 1)
+		exit(EXIT_FAILURE);
+	if (!var->pid[1])
+		_second_child_process(var, argv, env);
 	close(var->pipe_fd[1]);
-	free(var);
+	waitpid(var->pid[0], NULL, 0);
+	waitpid(var->pid[1], NULL, 0);
 }
 
 int	main(int arc, char **argv, char **env)
@@ -42,7 +50,8 @@ int	main(int arc, char **argv, char **env)
 		return (EXIT_FAILURE);
 	t_struct	*var;
 
-	var = calloc(1, sizeof(t_struct));
+/*	var = (t_struct){};*/
+	var = ft_calloc(1, sizeof(var));
 	_init_things(var, argv, env);
 	return (0);
 }
