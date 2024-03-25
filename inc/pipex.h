@@ -27,6 +27,7 @@ typedef struct	s_struct
 	pid_t	pid[2];
 	int		pipe_fd[2];
 	char	**path;
+	char	**path2;
 	int		fd;
 	int		fd2;
 	char	*cmd1;
