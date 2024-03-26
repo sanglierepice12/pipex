@@ -17,29 +17,22 @@
 # include <fcntl.h>
 # include <sys/wait.h>
 
-#define GREEN "\033[32m"
-#define GREEN2 "\033[0m"
-
-#define PRINTGREEN(text) printf(GREEN "%s" GREEN2, text)
-
 /* ------- PRINTF -------*/
 # include <stdio.h>
 /* ------- ------ -------*/
 
 /* ------- STRUCT -------*/
-typedef struct	s_struct
+typedef struct s_struct
 {
 	pid_t	pid;
 	int		pipe_fd[2];
 	char	**path;
-	char	**arg_split;
-	char	**arg_split2;
 	int		fd;
 	int		fd2;
-	char	*cmd1;
-	char	*cmd2;
-	char	*exec[2];
-	char	*exec2[2];
+	char	**cmd1;
+	char	**cmd2;
+	char	*exec;
+	char	*exec2;
 	int		count;
 }				t_struct;
 

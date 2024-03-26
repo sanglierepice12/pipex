@@ -21,64 +21,43 @@ void	_check_cmd(t_struct *var, char **argv)
 	flag = 1;
 	flag2 = 1;
 	if (!access(argv[2], F_OK))
-		var->cmd1 = argv[2];
+		var->cmd1[0] = argv[2];
+	else
+		var->cmd1 = ft_split(argv[2], 32);
 	if (!access(argv[3], F_OK))
-		var->cmd2 = argv[3];
+		var->cmd2[0] = argv[3];
+	else
+		var->cmd2 = ft_split(argv[3], 32);
 	i = 0;
-	var->arg_split = ft_split(argv[2], 32);
-	var->arg_split2 = ft_split(argv[3], 32);
-	while (var->path[i] || (!var->cmd1 || !var->cmd2))
+	while (var->path[i])
 	{
 		if (flag == 1)
-			var->cmd1 = ft_strjoin(var->path[i], var->arg_split[0]);
+			var->exec = ft_strjoin(var->path[i], var->cmd1[0]);
 		if (flag2 == 1)
-			var->cmd2 = ft_strjoin(var->path[i], var->arg_split2[0]);
-		if (!access(var->cmd1, F_OK))
+			var->exec2 = ft_strjoin(var->path[i], var->cmd2[0]);
+		if (!access(var->exec, F_OK))
 		{
-			var->cmd1 = ft_strjoin(var->path[i], var->arg_split[0]);
+			var->cmd1[0] = ft_strdup(var->exec);
 			flag = 0;
 		}
-		if (!access(var->cmd2, F_OK))
+		if (!access(var->cmd2[0], F_OK))
 		{
-			var->cmd2 = ft_strjoin(var->path[i], var->arg_split2[0]);
+			var->cmd2[0] = ft_strdup(var->exec2);
 			flag2 = 0;
 		}
 		if (flag == 0 && flag2 == 0)
-			break;
-		free(var->path[i]);
+			break ;
 		i++;
 	}
-	var->count = 0;
-	var->exec[var->count] = ft_strdup(var->arg_split[0]);
-	if (var->arg_split[1] != NULL)
-	{
-		var->count = var->count + 1;
-		var->exec[var->count] = ft_strdup(var->arg_split[1]);
-	}
-	var->count = var->count + 1;
-	var->exec[var->count] = ft_strdup(NULL);
-	printf("var->exec = %s\n", var->exec[0]);
-	printf("var->exec = %s\n", var->arg_split[1]);
-	var->count = 0;
-	var->exec2[var->count] = ft_strdup(var->arg_split2[0]);
-	if (var->arg_split[1])
-	{
-		var->count = var->count + 1;
-		var->exec2[var->count] = ft_strdup(var->arg_split2[1]);
-	}
-	var->count = var->count + 1;
-	var->exec2[var->count] = ft_strdup(NULL);
-	ft_free_tab(var->arg_split);
-	ft_free_tab(var->arg_split2);
-	if (!var->path[i])
-		exit(EXIT_FAILURE);
+/*	free(var->exec);
+	printf("%s\n", var->path[i]);*/
+	/*if (!var->path[i])
+		exit(EXIT_FAILURE);*/
 }
 
 void	_process(t_struct *var, char **argv, char **env)
 {
 	_check_cmd(var, argv);
-	printf("cc\n");
-
 	if (pipe(var->pipe_fd) == -1)
 		exit(EXIT_FAILURE);
 	var->fd = open(argv[1], O_RDONLY);
@@ -96,18 +75,19 @@ void	_process(t_struct *var, char **argv, char **env)
 	dup2(var->fd2, STDOUT_FILENO);
 	close(var->pipe_fd[1]);
 	close(var->fd2);
-	execve(var->cmd2, var->exec, env);
+	execve(var->cmd2[0], var->cmd2, env);
+	exit(EXIT_FAILURE);
 }
 
 int	main(int arc, char **argv, char **env)
 {
+	t_struct	*var;
+
 	if (arc != 5)
 		exit(EXIT_FAILURE);
-	t_struct	*var;
-	(void)argv;
+	//(void)argv;
 	var = calloc(1, sizeof(t_struct));
 	_init_path(var, env);
 	_process(var, argv, env);
-	//frestruct
 	return (EXIT_SUCCESS);
 }
