@@ -14,12 +14,16 @@
 
 void	_init_path(t_struct *var, char **env)
 {
-	int i;
+	size_t	i;
 
 	i = 0;
-	if (!env)
-		exit(EXIT_FAILURE);
 	while (ft_strncmp(env[i], "PATH=", 5))
 		i++;
 	var->path = ft_split(env[i] + 5, ':');
+	i = 0;
+	while (var->path[i])
+	{
+		var->path[i] = ft_strjoin(var->path[i], "/");
+		i++;
+	}
 }
