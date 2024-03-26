@@ -33,7 +33,6 @@ typedef struct s_struct
 	char	**cmd2;
 	char	*exec;
 	char	*exec2;
-	int		count;
 }				t_struct;
 
 /* ------- PIPEX -------*/

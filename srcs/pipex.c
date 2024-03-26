@@ -20,11 +20,11 @@ void	_check_cmd(t_struct *var, char **argv)
 
 	flag = 1;
 	flag2 = 1;
-	if (!access(argv[2], F_OK))
+	if (!access(argv[2], F_OK) && !access(argv[2], X_OK))
 		var->cmd1[0] = argv[2];
 	else
 		var->cmd1 = ft_split(argv[2], 32);
-	if (!access(argv[3], F_OK))
+	if (!access(argv[3], F_OK) && !access(argv[3], X_OK))
 		var->cmd2[0] = argv[3];
 	else
 		var->cmd2 = ft_split(argv[3], 32);
@@ -73,8 +73,8 @@ void	_process(t_struct *var, char **argv, char **env)
 		exit(EXIT_FAILURE);
 	dup2(var->pipe_fd[0], STDIN_FILENO);
 	dup2(var->fd2, STDOUT_FILENO);
-	close(var->pipe_fd[1]);
 	close(var->fd2);
+	close(var->pipe_fd[1]);
 	execve(var->cmd2[0], var->cmd2, env);
 	exit(EXIT_FAILURE);
 }
