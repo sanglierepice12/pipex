@@ -16,8 +16,6 @@ void	_child_process(t_struct *var, char **env)
 {
 	if (dup2(var->fd, STDIN_FILENO) < 0)
 		exit(EXIT_FAILURE);
-/*	printf("var-> %s\n", var->cmd1[0]);
-	printf("var-> %s\n", var->cmd1[1]);*/
 	dup2(var->pipe_fd[1], STDOUT_FILENO);
 	close(var->pipe_fd[0]);
 	close(var->fd);

@@ -1,0 +1,9 @@
+total 36
+-rw-r--r-- 1 gsuter 2023_lyon    14 Mar 26 15:03 coucou
+-rw-r--r-- 1 gsuter 2023_lyon    14 Mar 26 17:02 foo
+drwxr-xr-x 3 gsuter 2023_lyon    34 Mar 26 16:42 inc
+drwxr-xr-x 5 gsuter 2023_lyon    73 Mar 26 15:21 libft
+-rw-r--r-- 1 gsuter 2023_lyon   814 Mar 26 15:03 Makefile
+drwxr-xr-x 2 gsuter 2023_lyon    52 Mar 26 17:02 objs
+-rwxr-xr-x 1 gsuter 2023_lyon 21504 Mar 26 17:02 pipex
+drwxr-xr-x 2 gsuter 2023_lyon    52 Mar 26 17:02 srcs

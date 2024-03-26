@@ -35,12 +35,12 @@ void	_check_cmd(t_struct *var, char **argv)
 			var->exec = ft_strjoin(var->path[i], var->cmd1[0]);
 		if (flag2 == 1)
 			var->exec2 = ft_strjoin(var->path[i], var->cmd2[0]);
-		if (!access(var->exec, F_OK))
+		if (!access(var->exec, F_OK) && !access(var->exec, X_OK))
 		{
 			var->cmd1[0] = ft_strdup(var->exec);
 			flag = 0;
 		}
-		if (!access(var->cmd2[0], F_OK))
+		if (!access(var->exec2, F_OK) && !access(var->exec2, X_OK))
 		{
 			var->cmd2[0] = ft_strdup(var->exec2);
 			flag2 = 0;
