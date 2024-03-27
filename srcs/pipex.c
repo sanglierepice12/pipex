@@ -14,41 +14,14 @@
 
 void	_check_cmd(t_struct *var, char **argv)
 {
-	size_t	i;
-	int		flag;
-	int		flag2;
-
-	flag = 1;
-	flag2 = 1;
-	if (!access(argv[2], F_OK) && !access(argv[2], X_OK))
-		var->cmd1[0] = argv[2];
-	else
+	if (argv[2])
 		var->cmd1 = ft_split(argv[2], 32);
-	if (!access(argv[3], F_OK) && !access(argv[3], X_OK))
-		var->cmd2[0] = argv[3];
-	else
+	if (access(argv[2], F_OK) && access(argv[2], X_OK))
+		var->cmd1 = _init_cmd(var->cmd1, var);
+	if (argv[3])
 		var->cmd2 = ft_split(argv[3], 32);
-	i = 0;
-	while (var->path[i])
-	{
-		if (flag == 1)
-			var->exec = ft_strjoin(var->path[i], var->cmd1[0]);
-		if (flag2 == 1)
-			var->exec2 = ft_strjoin(var->path[i], var->cmd2[0]);
-		if (!access(var->exec, F_OK) && !access(var->exec, X_OK))
-		{
-			var->cmd1[0] = ft_strdup(var->exec);
-			flag = 0;
-		}
-		if (!access(var->exec2, F_OK) && !access(var->exec2, X_OK))
-		{
-			var->cmd2[0] = ft_strdup(var->exec2);
-			flag2 = 0;
-		}
-		if (flag == 0 && flag2 == 0)
-			break ;
-		i++;
-	}
+	if (access(argv[3], F_OK) && access(argv[3], X_OK))
+		var->cmd2 = _init_cmd(var->cmd2, var);
 }
 
 void	_process(t_struct *var, char **argv, char **env)
@@ -59,17 +32,14 @@ void	_process(t_struct *var, char **argv, char **env)
 	var->fd = open(argv[1], O_RDONLY);
 	if (var->fd == -1)
 		exit(EXIT_FAILURE);
-	if ((var->pid = fork()) == -1)
+	var->pid = fork();
+	if (var->pid == -1)
 		exit(EXIT_FAILURE);
 	if (var->pid == 0)
 		_child_process(var, env);
 	var->fd2 = open(argv[4], O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (var->fd2 == -1)
-	{
-		wait(NULL);
 		perror("bite\n");
-		exit(EXIT_FAILURE);
-	}
 	var->pid2 = fork();
 	if (var->pid2 == -1)
 		exit(EXIT_FAILURE);
@@ -84,6 +54,7 @@ void	_process(t_struct *var, char **argv, char **env)
 int	main(int arc, char **argv, char **env)
 {
 	t_struct	*var;
+
 	if (arc != 5)
 		exit(EXIT_FAILURE);
 	var = calloc(1, sizeof(t_struct));

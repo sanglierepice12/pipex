@@ -22,6 +22,7 @@ void	_child_process(t_struct *var, char **env)
 	close(var->pipe_fd[0]);
 	close(var->fd);
 	execve(var->cmd1[0], var->cmd1, env);
+	_free_things(var);
 	exit(EXIT_FAILURE);
 }
 
@@ -35,5 +36,6 @@ void	_second_child_process(t_struct *var, char **env)
 	close(var->pipe_fd[0]);
 	close(var->pipe_fd[1]);
 	execve(var->cmd2[0], var->cmd2, env);
+	_free_things(var);
 	exit(EXIT_FAILURE);
 }

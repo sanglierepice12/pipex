@@ -45,7 +45,7 @@ void	_second_child_process(t_struct *var, char **env);
 
 /* ------- INIT -------*/
 void	_init_path(t_struct *var, char **env);
+char	**_init_cmd(char **cmd, t_struct *var);
 void	_free_things(t_struct *var);
-
 
 #endif
