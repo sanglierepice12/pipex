@@ -14,7 +14,7 @@ NAME	=	pipex
 
 CC		=	cc
 
-FLAGS	=	-Wall -Wextra -Werror -Iincludes -g
+FLAGS	=	-Wall -Wextra -Werror -Iincludes -g3
 
 all		:
 	@make --no-print-directory bonus -C libft/

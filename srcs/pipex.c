@@ -49,10 +49,6 @@ void	_check_cmd(t_struct *var, char **argv)
 			break ;
 		i++;
 	}
-/*	free(var->exec);
-	printf("%s\n", var->path[i]);*/
-	/*if (!var->path[i])
-		exit(EXIT_FAILURE);*/
 }
 
 void	_process(t_struct *var, char **argv, char **env)
@@ -67,27 +63,32 @@ void	_process(t_struct *var, char **argv, char **env)
 		exit(EXIT_FAILURE);
 	if (var->pid == 0)
 		_child_process(var, env);
-	waitpid(var->pid, 0, 0);
 	var->fd2 = open(argv[4], O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (var->fd2 == -1)
+	{
+		wait(NULL);
+		perror("bite\n");
 		exit(EXIT_FAILURE);
-	dup2(var->pipe_fd[0], STDIN_FILENO);
-	dup2(var->fd2, STDOUT_FILENO);
-	close(var->fd2);
+	}
+	var->pid2 = fork();
+	if (var->pid2 == -1)
+		exit(EXIT_FAILURE);
+	if (var->pid2 == 0)
+		_second_child_process(var, env);
+	close(var->pipe_fd[0]);
 	close(var->pipe_fd[1]);
-	execve(var->cmd2[0], var->cmd2, env);
-	exit(EXIT_FAILURE);
+	waitpid(var->pid, 0, 0);
+	waitpid(var->pid2, 0, 0);
 }
 
 int	main(int arc, char **argv, char **env)
 {
 	t_struct	*var;
-
 	if (arc != 5)
 		exit(EXIT_FAILURE);
-	//(void)argv;
 	var = calloc(1, sizeof(t_struct));
 	_init_path(var, env);
 	_process(var, argv, env);
+	_free_things(var);
 	return (EXIT_SUCCESS);
 }

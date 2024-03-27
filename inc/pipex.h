@@ -25,6 +25,7 @@
 typedef struct s_struct
 {
 	pid_t	pid;
+	pid_t	pid2;
 	int		pipe_fd[2];
 	char	**path;
 	int		fd;
@@ -40,10 +41,11 @@ void	_check_cmd(t_struct *var, char **argv);
 
 /* ------- PROCESS -------*/
 void	_child_process(t_struct *var, char **env);
-
-/* ------- UTILS -------*/
+void	_second_child_process(t_struct *var, char **env);
 
 /* ------- INIT -------*/
 void	_init_path(t_struct *var, char **env);
+void	_free_things(t_struct *var);
+
 
 #endif

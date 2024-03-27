@@ -27,3 +27,18 @@ void	_init_path(t_struct *var, char **env)
 		i++;
 	}
 }
+
+void	_free_things(t_struct *var)
+{
+	if (var->path)
+		ft_free_tab(var->path);
+	if (var->cmd1)
+		ft_free_tab(var->cmd1);
+	if (var->cmd2)
+		ft_free_tab(var->cmd2);
+	if (var->exec)
+		free(var->exec);
+	if (var->exec)
+		free(var->exec);
+	free(var);
+}
