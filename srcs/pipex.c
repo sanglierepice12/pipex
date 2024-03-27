@@ -14,12 +14,10 @@
 
 void	_check_cmd(t_struct *var, char **argv)
 {
-	if (argv[2])
-		var->cmd1 = ft_split(argv[2], 32);
+	var->cmd1 = ft_split(argv[2], 32);
 	if (access(argv[2], F_OK) && access(argv[2], X_OK))
 		var->cmd1 = _init_cmd(var->cmd1, var);
-	if (argv[3])
-		var->cmd2 = ft_split(argv[3], 32);
+	var->cmd2 = ft_split(argv[3], 32);
 	if (access(argv[3], F_OK) && access(argv[3], X_OK))
 		var->cmd2 = _init_cmd(var->cmd2, var);
 }

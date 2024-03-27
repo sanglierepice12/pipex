@@ -37,6 +37,7 @@ char	**_init_cmd(char **cmd, t_struct *var)
 
 	if (!cmd)
 		return (NULL);
+	printf("bite\n");
 	i = 0;
 	while (var->path[i])
 	{
