@@ -12,7 +12,7 @@
 
 #include "../inc/pipex.h"
 
-void	_child_process(t_struct *var, char **env, char **argv)
+void	_child_process(t_struct *var, char **argv)
 {
 	_check_cmd(var, argv, 1);
 	if (dup2(var->fd, STDIN_FILENO) < 0)
@@ -23,13 +23,13 @@ void	_child_process(t_struct *var, char **env, char **argv)
 	close(var->pipe_fd[0]);
 	close(var->fd);
 	if (var->cmd1)
-		execve(var->cmd1[0], var->cmd1, env);
+		execve(var->cmd1[0], var->cmd1, var->path);
 	_free_things(var);
-	perror("Error\n");
+	perror("Command not found\n");
 	exit(EXIT_FAILURE);
 }
 
-void	_second_child_process(t_struct *var, char **env, char **argv)
+void	_second_child_process(t_struct *var, char **argv)
 {
 	_check_cmd(var, argv, 0);
 	if (dup2(var->pipe_fd[0], STDIN_FILENO) < 0)
@@ -40,7 +40,7 @@ void	_second_child_process(t_struct *var, char **env, char **argv)
 	close(var->pipe_fd[0]);
 	close(var->pipe_fd[1]);
 	if(var->cmd2)
-		execve(var->cmd2[0], var->cmd2, env);
+		execve(var->cmd2[0], var->cmd2, var->path);
 	_free_things(var);
 	perror("Error\n");
 	exit(EXIT_FAILURE);

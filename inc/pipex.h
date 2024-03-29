@@ -39,8 +39,8 @@ typedef struct s_struct
 /* ------- PIPEX -------*/
 
 /* ------- PROCESS -------*/
-void	_child_process(t_struct *var, char **env, char **argv);
-void	_second_child_process(t_struct *var, char **env, char **argv);
+void	_child_process(t_struct *var, char **argv);
+void	_second_child_process(t_struct *var, char **argv);
 
 /* ------- INIT -------*/
 void	_init_path(t_struct *var, char **env);

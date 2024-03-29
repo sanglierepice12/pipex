@@ -14,12 +14,12 @@ NAME	=	pipex
 
 CC		=	cc
 
-FLAGS	=	-Wall -Wextra -Werror -Iincludes -g3
+FLAGS	=	-Wall -Wextra -Werror -Iincludes -g
 #-fsanitize=address
 
 all		:
-	@make --no-print-directory bonus -C libft/
-	@make --no-print-directory ${NAME}
+	${MAKE} --no-print-directory bonus -C libft/
+	${MAKE} --no-print-directory ${NAME}
 
 ${OBJS}	:	${OBJ_D}%.o: ${SRC_D}%.c libft/incs/libft.h inc/pipex.h libft/libft.a
 	${CC} ${FLAGS} -c $< -o $@

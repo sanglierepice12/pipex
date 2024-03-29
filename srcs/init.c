@@ -6,7 +6,7 @@
 /*   By: gsuter <gsuter@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 12:08:54 by gsuter            #+#    #+#             */
-/*   Updated: 2024/03/22 12:08:54 by gsuter           ###   ########.fr       */
+/*   Updated: 2024/03/29 14:17:51 by gsuter           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,14 @@ void	_init_path(t_struct *var, char **env)
 	char	*temp;
 
 	i = 0;
-	while (ft_strncmp(env[i], "PATH=", 5))
+	while (env[i] && ft_strncmp(env[i], "PATH=", 5))
 		i++;
+	if (!env[i])
+	{
+		printf("%s\n", env[i]);
+		var->path = NULL;
+		return ;
+	}
 	var->path = ft_split(env[i] + 5, ':');
 	i = 0;
 	while (var->path[i])
@@ -38,6 +44,11 @@ void	_check_cmd(t_struct *var, char **argv, int flag)
 		if (argv[2][0] == '\0')
 				argv[2] = NULL;
 		var->cmd1 = ft_split(argv[2], 32);
+		if (!var->cmd1)
+		{
+			_free_things(var);
+			exit(EXIT_FAILURE);
+		}
 		if (access(argv[2], F_OK) && access(argv[2], X_OK))
 			var->cmd1 = _init_cmd(var->cmd1, var);
 	}
@@ -46,6 +57,11 @@ void	_check_cmd(t_struct *var, char **argv, int flag)
 		if (argv[3][0] == '\0')
 			argv[3] = NULL;
 		var->cmd2 = ft_split(argv[3], 32);
+		if (!var->cmd2)
+		{
+			_free_things(var);
+			exit(EXIT_FAILURE);
+		}
 		if (access(argv[3], F_OK) && access(argv[3], X_OK))
 			var->cmd2 = _init_cmd(var->cmd2, var);
 	}
@@ -55,9 +71,13 @@ char	**_init_cmd(char **cmd, t_struct *var)
 {
 	size_t	i;
 
-	if (!cmd)
-		return (NULL);
 	i = 0;
+	if  (!cmd || !var->path)
+	{
+		if (cmd)
+			ft_free_tab(cmd);
+		return (NULL);
+	}
 	while (var->path[i])
 	{
 		var->exec = ft_strjoin(var->path[i], cmd[0]);
