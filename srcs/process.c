@@ -12,8 +12,9 @@
 
 #include "../inc/pipex.h"
 
-void	_child_process(t_struct *var, char **env)
+void	_child_process(t_struct *var, char **env, char **argv)
 {
+	_check_cmd(var, argv, 1);
 	if (dup2(var->fd, STDIN_FILENO) < 0)
 		exit(EXIT_FAILURE);
 	if (dup2(var->pipe_fd[1], STDOUT_FILENO) < 0)
@@ -21,13 +22,16 @@ void	_child_process(t_struct *var, char **env)
 	close(var->pipe_fd[1]);
 	close(var->pipe_fd[0]);
 	close(var->fd);
-	execve(var->cmd1[0], var->cmd1, env);
+	if (var->cmd1)
+		execve(var->cmd1[0], var->cmd1, env);
 	_free_things(var);
+	perror("Error\n");
 	exit(EXIT_FAILURE);
 }
 
-void	_second_child_process(t_struct *var, char **env)
+void	_second_child_process(t_struct *var, char **env, char **argv)
 {
+	_check_cmd(var, argv, 0);
 	if (dup2(var->pipe_fd[0], STDIN_FILENO) < 0)
 		exit(EXIT_FAILURE);
 	if (dup2(var->fd2, STDOUT_FILENO) < 0)
@@ -35,7 +39,9 @@ void	_second_child_process(t_struct *var, char **env)
 	close(var->fd2);
 	close(var->pipe_fd[0]);
 	close(var->pipe_fd[1]);
-	execve(var->cmd2[0], var->cmd2, env);
+	if(var->cmd2)
+		execve(var->cmd2[0], var->cmd2, env);
 	_free_things(var);
+	perror("Error\n");
 	exit(EXIT_FAILURE);
 }

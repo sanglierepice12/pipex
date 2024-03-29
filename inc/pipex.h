@@ -37,14 +37,14 @@ typedef struct s_struct
 }				t_struct;
 
 /* ------- PIPEX -------*/
-void	_check_cmd(t_struct *var, char **argv);
 
 /* ------- PROCESS -------*/
-void	_child_process(t_struct *var, char **env);
-void	_second_child_process(t_struct *var, char **env);
+void	_child_process(t_struct *var, char **env, char **argv);
+void	_second_child_process(t_struct *var, char **env, char **argv);
 
 /* ------- INIT -------*/
 void	_init_path(t_struct *var, char **env);
+void	_check_cmd(t_struct *var, char **argv, int flag);
 char	**_init_cmd(char **cmd, t_struct *var);
 void	_free_things(t_struct *var);
 

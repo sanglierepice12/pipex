@@ -88,6 +88,8 @@ char	**ft_split(char const *s, char c)
 	size_t	size;
 	char	**tab;
 
+	if (!s)
+		return (NULL);
 	size = ft_count_words(s, c);
 	tab = malloc(sizeof(char *) * (size + 1));
 	if (!tab)

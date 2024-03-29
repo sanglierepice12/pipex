@@ -15,6 +15,7 @@ NAME	=	pipex
 CC		=	cc
 
 FLAGS	=	-Wall -Wextra -Werror -Iincludes -g3
+#-fsanitize=address
 
 all		:
 	@make --no-print-directory bonus -C libft/
