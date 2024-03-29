@@ -36,8 +36,6 @@ typedef struct s_struct
 	char	*exec2;
 }				t_struct;
 
-/* ------- PIPEX -------*/
-
 /* ------- PROCESS -------*/
 void	_child_process(t_struct *var, char **argv);
 void	_second_child_process(t_struct *var, char **argv);
@@ -47,5 +45,6 @@ void	_init_path(t_struct *var, char **env);
 void	_check_cmd(t_struct *var, char **argv, int flag);
 char	**_init_cmd(char **cmd, t_struct *var);
 void	_free_things(t_struct *var);
+void	ft_fail(t_struct *var);
 
 #endif

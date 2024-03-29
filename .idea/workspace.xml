@@ -18,10 +18,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f614e9b8-9258-42c8-81b9-91946849faaf" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/pipex.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/inc/pipex.h" beforeDir="false" afterPath="$PROJECT_DIR$/inc/pipex.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/objs/init.o" beforeDir="false" afterPath="$PROJECT_DIR$/objs/init.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/objs/pipex.o" beforeDir="false" afterPath="$PROJECT_DIR$/objs/pipex.o" afterDir="false" />
@@ -105,6 +102,7 @@
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
     "structure.view.defaults.are.configured": "true",
     "vue.rearranger.settings.migration": "true"
   }
@@ -150,22 +148,11 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1711717171427</updated>
-      <workItem from="1711717173989" duration="2126000" />
+      <workItem from="1711717173989" duration="7076000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/srcs/init.c</url>
-          <line>22</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

@@ -34,6 +34,8 @@ void	_process(t_struct *var, char **argv)
 		_second_child_process(var, argv);
 	close(var->pipe_fd[0]);
 	close(var->pipe_fd[1]);
+	close(var->fd);
+	close(var->fd2);
 	waitpid(var->pid, 0, 0);
 	waitpid(var->pid2, 0, 0);
 }
